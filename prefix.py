@@ -4,7 +4,10 @@
 import requests
 import json
 
-r = requests.post("http://challenge.code2040.org/api/prefix", data = {'token':''}) # Removed token to protect privacy
+myData = {'token':''} # Removed token to protect privacy
+headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
+
+r = requests.post("http://challenge.code2040.org/api/prefix", data = json.dumps(myData), headers = headers)
 
 jsonData = r.json()
 
@@ -16,6 +19,8 @@ for item in originalArray:
     if not (item.startswith(prefix)):
         newArray.append(item)
 
-r = requests.post("http://challenge.code2040.org/api/prefix/validate", data = {'token':'', 'array':json.dumps(newArray)}) # Removed token to protect privacy
+myData = {'token':'', 'array':newArray} # Removed token to protect privacy
+
+r = requests.post("http://challenge.code2040.org/api/prefix/validate", data = json.dumps(myData), headers = headers) 
 
 print r.text
